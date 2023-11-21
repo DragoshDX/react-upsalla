@@ -47,3 +47,17 @@ console.log(
     return sentence;
   }, 'Prietenii mei sunt '),
 );
+
+console.warn(`
+  Prin aceeasi metoda, afiseaza propozitia:
+  “Diferenta de varsta intre Larry si Dragos este de xxx ani.” etc…
+`);
+const sentence1 = Object.values(person.friends).reduce((message, friend) => {
+  const { name, age } = friend;
+  const ageDiff = Math.abs(person.age - age);
+
+  message += `Diferenta de varsta intre ${name} si ${person.name} este de ${ageDiff} ani. `;
+
+  return message;
+}, '');
+console.log(sentence1.trim());
