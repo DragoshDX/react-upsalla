@@ -43,8 +43,18 @@ searchForm.addEventListener('submit', (event) => {
     );
   }
 
+  const fragment = new DocumentFragment();
+  contacts.forEach((contact) => {
+    const { name, surname } = contact;
+
+    const div = document.createElement('div');
+    div.innerText = `${name} ${surname}`;
+
+    fragment.append(div);
+  });
+
   stage.innerHTML = '';
-  stage.append(contacts);
+  stage.append(fragment);
   queryInput.value = '';
 });
 
