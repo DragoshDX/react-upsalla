@@ -18,12 +18,26 @@ searchForm.addEventListener('submit', (event) => {
   if (contactsCount <= 0) {
     addMessage(renderMessage('No contacts found', 'warning'));
   } else {
+    const petsCount = contacts.reduce((petsCount, contact) => {
+      const { pets = [] } = contact;
+      petsCount += pets.length;
+
+      return petsCount;
+    }, 0);
+
     addMessage(
       renderMessage(
         `Found ${pluralize(contactsCount, {
           one: 'contact',
           many: 'contacts',
-        })} with some pets.`,
+        })} with ${
+          petsCount <= 0
+            ? 'no pets'
+            : pluralize(petsCount, {
+                one: 'pet',
+                many: 'pets',
+              })
+        }.`,
         'success',
       ),
     );
