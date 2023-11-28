@@ -1,4 +1,6 @@
+import { addMessage } from './notificationBar.js';
 import { deleteContact } from './query.js';
+import renderMessage from './message.js';
 
 const stage = document.querySelector('.stage');
 
@@ -19,6 +21,7 @@ stage.addEventListener('click', (event) => {
 
   deleteContact(contactId);
   parent.remove();
+  addMessage(renderMessage('Contact removed', 'danger'));
 });
 
 export default stage;
