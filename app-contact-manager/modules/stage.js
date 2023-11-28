@@ -24,4 +24,34 @@ stage.addEventListener('click', (event) => {
   addMessage(renderMessage('Contact removed', 'danger'));
 });
 
+// add contact form
+stage.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const { target } = event;
+
+  if (target.nodeName !== 'FORM' || !target.classList.contains('add-contact')) {
+    return;
+  }
+
+  const form = target;
+  // input elements:
+  const { name, surname, phone, email } = form;
+  const contact = {
+    name: name.value,
+    surname: surname.value,
+    phone: phone.value,
+    email: email.value,
+    // hack:
+    id: Number(Date.now().toString().slice(-6)),
+  };
+
+  // implement create contact
+  console.log(contact);
+
+  addMessage(
+    renderMessage(`Contact ${name.value} ${surname.value} created.`, 'success'),
+  );
+  stage.innerHTML = '';
+});
+
 export default stage;
