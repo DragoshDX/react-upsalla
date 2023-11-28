@@ -3,6 +3,7 @@ import { findContact } from './query.js';
 import stage from './stage.js';
 import renderMessage from './message.js';
 import { pluralize } from './utils.js';
+import { render as renderContact } from './contact.js';
 
 const searchForm = document.querySelector('.search-form');
 
@@ -45,12 +46,7 @@ searchForm.addEventListener('submit', (event) => {
 
   const fragment = new DocumentFragment();
   contacts.forEach((contact) => {
-    const { name, surname } = contact;
-
-    const div = document.createElement('div');
-    div.innerText = `${name} ${surname}`;
-
-    fragment.append(div);
+    fragment.append(renderContact(contact));
   });
 
   stage.innerHTML = '';
