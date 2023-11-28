@@ -1,6 +1,7 @@
 import { addMessage } from './notificationBar.js';
 import { findContact } from './query.js';
 import stage from './stage.js';
+import renderMessage from './message.js';
 
 const searchForm = document.querySelector('.search-form');
 
@@ -14,9 +15,9 @@ searchForm.addEventListener('submit', (event) => {
   const contactsCount = contacts.length;
 
   if (contactsCount <= 0) {
-    addMessage('No contacts found');
+    addMessage(renderMessage('No contacts found', 'warning'));
   } else {
-    addMessage(`${contactsCount} contacts found`);
+    addMessage(renderMessage(`${contactsCount} contacts found`, 'success'));
   }
 
   stage.innerHTML = '';
