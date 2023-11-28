@@ -7,7 +7,9 @@ export const findContact = (needle = 'query') => {
       return typeof part === 'number' || typeof part === 'string';
     });
 
-    if (values.join('').includes(needle)) {
+    needle = needle.toLowerCase();
+
+    if (values.join('').toLowerCase().includes(needle)) {
       return true;
     }
 
