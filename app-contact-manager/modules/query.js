@@ -36,3 +36,9 @@ export const deleteContact = (contactId) => {
     contacts.splice(contactIndex, 1);
   }
 };
+
+// add contact
+export const addContact = (contact) => {
+  // push mutates
+  contacts.push(contact);
+};

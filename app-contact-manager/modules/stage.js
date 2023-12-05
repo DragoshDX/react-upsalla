@@ -1,5 +1,5 @@
 import { addMessage } from './notificationBar.js';
-import { deleteContact } from './query.js';
+import { addContact, deleteContact } from './query.js';
 import renderMessage from './message.js';
 
 const stage = document.querySelector('.stage');
@@ -46,7 +46,7 @@ stage.addEventListener('submit', (event) => {
   };
 
   // implement create contact
-  console.log(contact);
+  addContact(contact);
 
   addMessage(
     renderMessage(`Contact ${name.value} ${surname.value} created.`, 'success'),
