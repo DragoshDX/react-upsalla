@@ -122,7 +122,9 @@ stage.addEventListener('submit', (event) => {
   editContact(contact);
 
   stage.innerHTML = '';
-  addMessage(renderMessage(`Contact ${name.value} ${surname.value} saved.`));
+  addMessage(
+    renderMessage(`Contact ${name.value} ${surname.value} saved.`, 'success'),
+  );
 });
 
 export default stage;
