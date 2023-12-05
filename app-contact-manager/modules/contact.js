@@ -11,9 +11,14 @@ export const render = (contact) => {
       <li>${email}</li>
     </ul>
 
+    <button title="Edit"
+      type="button"
+      class="btn btn-secondary edit-friend"
+    >Edit</button>
+
     <button title="Delete"
       type="button"
-      class="btn btn-secondary delete-friend"
+      class="btn btn-danger delete-friend"
     >Delete</button>
   `;
 
