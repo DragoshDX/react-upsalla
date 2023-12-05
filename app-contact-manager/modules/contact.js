@@ -1,3 +1,5 @@
+import { render as renderPet } from './pet.js';
+
 export const render = (contact) => {
   const { id, name, surname, phone, email, pets = [] } = contact;
   const container = document.createElement('article');
@@ -21,6 +23,17 @@ export const render = (contact) => {
       class="btn btn-danger delete-friend"
     >Delete</button>
   `;
+
+  const petUl = document.createElement('ul');
+
+  pets.forEach((pet) => {
+    const renderedPetArticle = renderPet(pet);
+    const petLi = document.createElement('li');
+    petLi.append(renderedPetArticle);
+    petUl.append(petLi);
+  });
+
+  container.append(petUl);
 
   return container;
 };

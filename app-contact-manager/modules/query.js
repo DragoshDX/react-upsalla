@@ -63,6 +63,7 @@ export const editContact = (contact) => {
   for (let i = 0; i < contactProperties.length; i++) {
     const propertyName = contactProperties[i];
 
-    existingContact[propertyName] = contact[propertyName];
+    existingContact[propertyName] =
+      contact[propertyName] || existingContact[propertyName];
   }
 };
