@@ -127,4 +127,26 @@ stage.addEventListener('submit', (event) => {
   );
 });
 
+// add pet button
+stage.addEventListener('click', (event) => {
+  const { target } = event;
+
+  if (
+    target.nodeName !== 'BUTTON' ||
+    !target.classList.contains('add-pet-button')
+  ) {
+    return;
+  }
+
+  const addPetButton = target;
+  const ownerContainer = addPetButton.closest('.contact');
+  const contactId = ownerContainer.dataset.contactId;
+
+  clearMessages();
+  stage.innerHTML = '';
+
+  // for next time
+  stage.append('add pet');
+});
+
 export default stage;

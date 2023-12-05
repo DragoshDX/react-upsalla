@@ -18,6 +18,12 @@ export const render = (contact) => {
       class="btn btn-secondary edit-friend"
     >Edit</button>
 
+
+    <button title="Add pet"
+      type="button"
+      class="btn btn-success add-pet-button"
+    >Add pet</button>
+
     <button title="Delete"
       type="button"
       class="btn btn-danger delete-friend"
