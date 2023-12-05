@@ -54,4 +54,18 @@ stage.addEventListener('submit', (event) => {
   stage.innerHTML = '';
 });
 
+// cancel button
+stage.addEventListener('click', (event) => {
+  const { target } = event;
+
+  if (
+    target.nodeName !== 'BUTTON' ||
+    !target.classList.contains('cancel-button')
+  ) {
+    return;
+  }
+
+  stage.innerHTML = '';
+});
+
 export default stage;
