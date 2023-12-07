@@ -1,5 +1,11 @@
 import { addMessage, clearMessages } from './notificationBar.js';
-import { addContact, deleteContact, editContact, getContact } from './query.js';
+import {
+  addContact,
+  addPet,
+  deleteContact,
+  editContact,
+  getContact,
+} from './query.js';
 import renderMessage from './message.js';
 import { render as renderEditContact } from './editContactForm.js';
 import { render as renderAddPetForm } from './addPetForm.js';
@@ -172,7 +178,18 @@ stage.addEventListener('submit', (event) => {
     id: Number(Date.now().toString().slice(-6)),
   };
 
-  // addPet(contactId.value, pet)
+  addPet(contactId.value, pet);
+  const { name: contactName, surname: contactSurname } = getContact(
+    contactId.value,
+  );
+
+  stage.innerHTML = '';
+  addMessage(
+    renderMessage(
+      `Pet ${name.value} added to contact ${contactName} ${contactSurname}.`,
+      'success',
+    ),
+  );
 });
 
 export default stage;
