@@ -43,8 +43,7 @@ const ProductControls = (props) => {
 // old pre 18 method of render
 const productTileControls = document.querySelectorAll('.product-tile-controls');
 productTileControls.forEach((productTileControl, index) => {
-  ReactDOM.render(
-    <ProductControls productId={index}></ProductControls>,
-    productTileControl,
-  );
+  const root = ReactDOM.createRoot(productTileControl);
+
+  root.render(<ProductControls productId={index}></ProductControls>);
 });
