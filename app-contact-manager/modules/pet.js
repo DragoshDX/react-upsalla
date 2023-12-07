@@ -13,13 +13,14 @@ export const render = (pet) => {
     </ul>
     <footer class="mt-2">
       <button type="button"
-        title="Delete"
-        class="btn btn-secondary delete-pet-button"
-      >Delete</button>
-      <button type="button"
         title="Edit"
         class="btn btn-secondary edit-pet-button"
       >Edit</button>
+
+      <button type="button"
+        title="Delete"
+        class="btn btn-danger delete-pet-button"
+      >Delete</button>
     </footer>
   `;
 
