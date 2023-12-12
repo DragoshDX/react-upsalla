@@ -16,6 +16,14 @@ const AddToCartButton = ({ productId }) => {
 
     // simulate request
     setTimeout(() => {
+      dispatchEvent(
+        new CustomEvent('addToCart', {
+          detail: {
+            productId,
+          },
+        }),
+      );
+
       // mark state as done
       setState({
         ...actualState,
@@ -30,6 +38,7 @@ const AddToCartButton = ({ productId }) => {
       type="button"
       title={added === true ? 'Remove from Cart' : 'Add to Cart'}
       onClick={onClick}
+      disabled={busy}
     >
       {added === true ? `PID: ${productId} in cart` : 'Add to Cart'}{' '}
       {busy === true ? <i className="fas fa-spinner"></i> : null}
@@ -50,9 +59,28 @@ productTileControls.forEach((productTileControl, index) => {
   root.render(<ProductControls productId={index}></ProductControls>);
 });
 
-const HeaderCartCounter = ({ qty = 0 }) => {
+const HeaderCartCounter = () => {
+  const state = React.useState(0);
+  const qty = state[0];
+  const setState = state[1];
+
+  React.useEffect(() => {
+    addEventListener('addToCart', () => {
+      setState(qty + 1);
+    });
+  }, [qty]);
+
+  const showProducts = () => {
+    let message = '';
+    if (qty <= 0) {
+      message = 'There are no products in your cart.';
+    }
+
+    alert(message);
+  };
+
   return (
-    <div className="header-cart">
+    <div className="header-cart" onClick={showProducts}>
       <span className="cart-qty">{qty}</span>
 
       <i className="fas fa-shopping-cart icon"></i>
