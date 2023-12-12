@@ -8,12 +8,15 @@ const AddToCartButton = ({ productId }) => {
   const { added, busy } = actualState;
 
   const onClick = () => {
+    // set state as busy before request
     setState({
       ...actualState,
       busy: true,
     });
 
+    // simulate request
     setTimeout(() => {
+      // mark state as done
       setState({
         ...actualState,
         added: !actualState.added,
@@ -40,10 +43,31 @@ const ProductControls = (props) => {
   return <AddToCartButton productId={productId}></AddToCartButton>;
 };
 
-// old pre 18 method of render
 const productTileControls = document.querySelectorAll('.product-tile-controls');
 productTileControls.forEach((productTileControl, index) => {
   const root = ReactDOM.createRoot(productTileControl);
 
   root.render(<ProductControls productId={index}></ProductControls>);
 });
+
+const HeaderCartCounter = ({ qty = 0 }) => {
+  return (
+    <div className="header-cart">
+      <span className="cart-qty">{qty}</span>
+
+      <i className="fas fa-shopping-cart icon"></i>
+    </div>
+  );
+};
+
+const HeaderCounters = () => {
+  return (
+    <>
+      <HeaderCartCounter></HeaderCartCounter>
+      {/* headwerwlcounter */}
+    </>
+  );
+};
+
+const headerCounters = document.querySelector('.header-counters');
+ReactDOM.createRoot(headerCounters).render(<HeaderCounters></HeaderCounters>);
