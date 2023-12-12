@@ -60,20 +60,32 @@ productTileControls.forEach((productTileControl, index) => {
 });
 
 const HeaderCartCounter = () => {
-  const state = React.useState(0);
-  const qty = state[0];
+  const state = React.useState({
+    productIds: [],
+    qty: 0,
+  });
+  const actualState = state[0];
   const setState = state[1];
 
   React.useEffect(() => {
-    addEventListener('addToCart', () => {
-      setState(qty + 1);
+    addEventListener('addToCart', ({ detail }) => {
+      const { productId } = detail;
+
+      setState((previousState) => {
+        return {
+          productIds: [...previousState.productIds, productId],
+          qty: previousState.qty + 1,
+        };
+      });
     });
-  }, [qty]);
+  }, []);
 
   const showProducts = () => {
     let message = '';
-    if (qty <= 0) {
+    if (actualState.qty <= 0) {
       message = 'There are no products in your cart.';
+    } else {
+      message = `These are the pids in your cart: ${actualState.productIds}`;
     }
 
     alert(message);
@@ -81,8 +93,7 @@ const HeaderCartCounter = () => {
 
   return (
     <div className="header-cart" onClick={showProducts}>
-      <span className="cart-qty">{qty}</span>
-
+      <span className="cart-qty">{actualState.qty}</span>
       <i className="fas fa-shopping-cart icon"></i>
     </div>
   );
