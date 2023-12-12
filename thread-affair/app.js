@@ -36,13 +36,56 @@ const AddToCartButton = ({ productId }) => {
 
   return (
     <button
-      className={`product-a2c ${added ? 'active' : ''}`}
+      className={`product-control ${added ? 'active' : ''}`}
       type="button"
       title={added === true ? 'Remove from Cart' : 'Add to Cart'}
       onClick={onClick}
       disabled={busy}
     >
-      {added === true ? `PID: ${productId} in cart` : 'Add to Cart'}{' '}
+      {added === true ? `PID: ${productId} in cart` : 'Add to Cart'}
+      {busy === true ? <i className="fas fa-spinner"></i> : null}
+    </button>
+  );
+};
+
+const AddToWishlistButton = ({ productId }) => {
+  // nested destructure
+  const [{ added, busy }, setState] = React.useState({
+    added: false,
+    busy: false,
+  });
+  const onClick = () => {
+    setState({
+      busy: true,
+    });
+
+    setTimeout(() => {
+      const eventName = added === true ? 'removeFromWl' : 'addToWl';
+
+      dispatchEvent(
+        new CustomEvent(eventName, {
+          detail: {
+            productId,
+          },
+        }),
+      );
+
+      setState({
+        added: !added,
+        busy: false,
+      });
+    }, Math.floor(Math.random() * (1000 * 3)));
+  };
+
+  return (
+    <button
+      className={`product-control ${added ? 'active' : ''}`}
+      type="button"
+      title={added === true ? 'Remove from Wishlist' : 'Add to Wishlist'}
+      onClick={onClick}
+      disabled={busy}
+    >
+      {added === true ? `PID: ${productId} in wl` : 'Add to Wishlist'}
       {busy === true ? <i className="fas fa-spinner"></i> : null}
     </button>
   );
@@ -51,7 +94,10 @@ const AddToCartButton = ({ productId }) => {
 const ProductControls = (props) => {
   const { productId } = props;
 
-  return <AddToCartButton productId={productId}></AddToCartButton>;
+  return [
+    <AddToCartButton productId={productId}></AddToCartButton>,
+    <AddToWishlistButton productId={productId}></AddToWishlistButton>,
+  ];
 };
 
 const productTileControls = document.querySelectorAll('.product-tile-controls');
@@ -114,11 +160,30 @@ const HeaderCartCounter = () => {
   );
 };
 
+const HeaderWlCounter = () => {
+  React.useEffect(() => {
+    addEventListener('addToWl', ({ detail }) => {
+      alert(detail.productId);
+    });
+  }, []);
+
+  React.useEffect(() => {
+    addEventListener('removeFromWl', ({ detail }) => {});
+  }, []);
+
+  return (
+    <div className="header-cart">
+      <span className="cart-qty">ceva</span>
+      <i className="fas fa-heart icon"></i>
+    </div>
+  );
+};
+
 const HeaderCounters = () => {
   return (
     <>
       <HeaderCartCounter></HeaderCartCounter>
-      {/* headwerwlcounter */}
+      <HeaderWlCounter></HeaderWlCounter>
     </>
   );
 };
