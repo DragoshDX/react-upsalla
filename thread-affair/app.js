@@ -16,8 +16,10 @@ const AddToCartButton = ({ productId }) => {
 
     // simulate request
     setTimeout(() => {
+      const eventName = added === true ? 'removeFromCart' : 'addToCart';
+
       dispatchEvent(
-        new CustomEvent('addToCart', {
+        new CustomEvent(eventName, {
           detail: {
             productId,
           },
@@ -75,6 +77,19 @@ const HeaderCartCounter = () => {
         return {
           productIds: [...previousState.productIds, productId],
           qty: previousState.qty + 1,
+        };
+      });
+    });
+  }, []);
+
+  React.useEffect(() => {
+    addEventListener('removeFromCart', ({ detail }) => {
+      setState((previousState) => {
+        return {
+          productIds: previousState.productIds.filter((productId) => {
+            return productId !== detail.productId;
+          }),
+          qty: previousState.qty - 1,
         };
       });
     });
