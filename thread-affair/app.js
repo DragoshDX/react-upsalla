@@ -263,3 +263,27 @@ const HeaderCounters = () => {
 
 const headerCounters = document.querySelector('.header-counters');
 ReactDOM.createRoot(headerCounters).render(<HeaderCounters></HeaderCounters>);
+
+// newsletter form
+const NewsletterForm = () => {
+  return (
+    <form className="form-newsletter container">
+      <label htmlFor="field-newsletter">
+        Subscribe to our <span>newsletter</span>
+      </label>
+
+      <input
+        type="text"
+        name="field-newsletter"
+        id="field-newsletter"
+        placeholder="enter your email address to receive the latest news!"
+      ></input>
+
+      <button>Subscribe</button>
+    </form>
+  );
+};
+
+ReactDOM.createRoot(document.querySelector('section.home-newsletter')).render(
+  <NewsletterForm></NewsletterForm>,
+);
