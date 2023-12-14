@@ -266,6 +266,17 @@ ReactDOM.createRoot(headerCounters).render(<HeaderCounters></HeaderCounters>);
 
 // newsletter form
 const NewsletterForm = () => {
+  const [{ email }, setState] = React.useState({
+    email: '',
+  });
+
+  const onChange = (event) => {
+    // just target recommended
+    setState({
+      email: event.target.value,
+    });
+  };
+
   return (
     <form className="form-newsletter container">
       <label htmlFor="field-newsletter">
@@ -277,8 +288,10 @@ const NewsletterForm = () => {
         name="field-newsletter"
         id="field-newsletter"
         placeholder="enter your email address to receive the latest news!"
+        value={email}
+        onChange={onChange}
       ></input>
-
+      {email}
       <button>Subscribe</button>
     </form>
   );
