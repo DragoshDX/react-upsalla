@@ -22,7 +22,7 @@ const AddToCartButton = ({ productId }) => {
     // simulate request
     setTimeout(() => {
       const eventName =
-        added === true ? ADD_TO_CART_EVENT : REMOVE_FROM_CART_EVENT;
+        added === true ? REMOVE_FROM_CART_EVENT : ADD_TO_CART_EVENT;
 
       dispatchEvent(
         new CustomEvent(eventName, {
@@ -66,7 +66,8 @@ const AddToWishlistButton = ({ productId }) => {
     });
 
     setTimeout(() => {
-      const eventName = added === true ? 'removeFromWl' : 'addToWl';
+      const eventName =
+        added === true ? REMOVE_FROM_WISHLIST_EVENT : ADD_TO_WISHLIST_EVENT;
 
       dispatchEvent(
         new CustomEvent(eventName, {
@@ -167,34 +168,50 @@ const HeaderCartCounter = () => {
 };
 
 const HeaderWlCounter = () => {
+  // nested destructure
   const [{ productIds, qty }, setState] = React.useState({
     productIds: [],
     qty: 0,
   });
 
   React.useEffect(() => {
-    addEventListener('addToWl', ({ detail }) => {
-      alert(detail.productId);
+    addEventListener(ADD_TO_WISHLIST_EVENT, ({ detail }) => {
+      const { productId } = detail;
+
+      setState(({ productIds, qty }) => {
+        return {
+          productIds: [...productIds, productId],
+          qty: ++qty,
+        };
+      });
     });
   }, []);
 
   React.useEffect(() => {
-    addEventListener('removeFromWl', ({ detail }) => {});
+    addEventListener(REMOVE_FROM_WISHLIST_EVENT, ({ detail }) => {
+      setState(({ productIds, qty }) => {
+        return {
+          productIds: productIds.filter((productId) => {
+            return productId !== detail.productId;
+          }),
+          qty: --qty,
+        };
+      });
+    });
   }, []);
 
   const showProducts = () => {
-    let message = '';
+    const message =
+      qty <= 0
+        ? 'There are no product in your wishlist.'
+        : `There are the pids in your wishlist: ${productIds}`;
 
-    if (qty <= 0) {
-      message = 'There are no product in your wishlist.';
-    } else {
-      message = `These are the pids in your wishlist: ${productIds}`;
-    }
+    alert(message);
   };
 
   return (
     <div className="header-counter" onClick={showProducts}>
-      <span className="cart-qty">ceva</span>
+      <span className="cart-qty">{qty}</span>
       <i className="fas fa-heart icon"></i>
     </div>
   );
