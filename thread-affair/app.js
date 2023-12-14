@@ -322,6 +322,15 @@ const NewsletterForm = () => {
         email: '',
         successMessage: `Emailul ${email} a fost inscris.`,
       });
+
+      //callback hell
+      setTimeout(() => {
+        setState({
+          ...state,
+          email: '',
+          successMessage: '',
+        });
+      }, 1200);
     }, 1200);
   };
 
