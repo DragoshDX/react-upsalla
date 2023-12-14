@@ -125,7 +125,7 @@ const HeaderCartCounter = () => {
   React.useEffect(() => {
     const handler = ({ detail }) => {
       const { productId } = detail;
-      alert('casualy pops alert');
+
       setState((previousState) => {
         return {
           productIds: [...previousState.productIds, productId],
