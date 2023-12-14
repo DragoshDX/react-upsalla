@@ -264,21 +264,44 @@ const HeaderCounters = () => {
 const headerCounters = document.querySelector('.header-counters');
 ReactDOM.createRoot(headerCounters).render(<HeaderCounters></HeaderCounters>);
 
+const validateEmail = (email) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(email);
+};
+
 // newsletter form
 const NewsletterForm = () => {
-  const [{ email }, setState] = React.useState({
+  const [{ email, formMessage }, setState] = React.useState({
     email: '',
+    formMessage: '',
   });
 
+  // controlled input
   const onChange = (event) => {
     // just target recommended
     setState({
       email: event.target.value,
+      formMessage: '',
     });
   };
 
+  const send = (event) => {
+    event.preventDefault();
+    // event.target['field-newsletter'].value
+
+    if (!validateEmail(email)) {
+      setState({
+        formMessage: 'Please use a valid email',
+      });
+
+      return;
+    }
+  };
+
   return (
-    <form className="form-newsletter container">
+    <form className="form-newsletter container" onSubmit={send}>
       <label htmlFor="field-newsletter">
         Subscribe to our <span>newsletter</span>
       </label>
@@ -291,8 +314,10 @@ const NewsletterForm = () => {
         value={email}
         onChange={onChange}
       ></input>
-      {email}
+
       <button>Subscribe</button>
+
+      <div className="form-message">{formMessage}</div>
     </form>
   );
 };
