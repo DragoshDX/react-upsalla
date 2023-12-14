@@ -273,16 +273,19 @@ const validateEmail = (email) => {
 
 // newsletter form
 const NewsletterForm = () => {
-  const [{ email, formMessage, busy }, setState] = React.useState({
+  const [state, setState] = React.useState({
     email: '',
     formMessage: '',
     busy: false,
+    successMessage: '',
   });
+  const { email, formMessage, busy, successMessage } = state;
 
   // controlled input
   const onChange = (event) => {
     // just target recommended
     setState({
+      ...state,
       email: event.target.value,
       formMessage: '',
     });
@@ -298,6 +301,7 @@ const NewsletterForm = () => {
 
     if (!validateEmail(email)) {
       setState({
+        ...state,
         formMessage: 'Please use a valid email',
       });
 
@@ -305,6 +309,7 @@ const NewsletterForm = () => {
     }
 
     setState({
+      ...state,
       busy: true,
       formMessage: '',
     });
@@ -312,12 +317,17 @@ const NewsletterForm = () => {
     // simulate ajax
     setTimeout(() => {
       setState({
+        ...state,
         busy: false,
         email: '',
         successMessage: `Emailul ${email} a fost inscris.`,
       });
     }, 1200);
   };
+
+  if (successMessage.length > 0) {
+    return <div className="container">{successMessage}</div>;
+  }
 
   return (
     <form className="form-newsletter container" onSubmit={send}>
