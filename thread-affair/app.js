@@ -123,20 +123,26 @@ const HeaderCartCounter = () => {
   const setState = state[1];
 
   React.useEffect(() => {
-    addEventListener(ADD_TO_CART_EVENT, ({ detail }) => {
+    const handler = ({ detail }) => {
       const { productId } = detail;
-
+      alert('casualy pops alert');
       setState((previousState) => {
         return {
           productIds: [...previousState.productIds, productId],
           qty: previousState.qty + 1,
         };
       });
-    });
+    };
+
+    addEventListener(ADD_TO_CART_EVENT, handler);
+
+    return () => {
+      removeEventListener(ADD_TO_CART_EVENT, handler);
+    };
   }, []);
 
   React.useEffect(() => {
-    addEventListener(REMOVE_FROM_CART_EVENT, ({ detail }) => {
+    const handler = ({ detail }) => {
       setState((previousState) => {
         return {
           productIds: previousState.productIds.filter((productId) => {
@@ -145,7 +151,13 @@ const HeaderCartCounter = () => {
           qty: previousState.qty - 1,
         };
       });
-    });
+    };
+
+    addEventListener(REMOVE_FROM_CART_EVENT, handler);
+
+    return () => {
+      removeEventListener(REMOVE_FROM_CART_EVENT, handler);
+    };
   }, []);
 
   const showProducts = () => {
@@ -175,7 +187,7 @@ const HeaderWlCounter = () => {
   });
 
   React.useEffect(() => {
-    addEventListener(ADD_TO_WISHLIST_EVENT, ({ detail }) => {
+    const handler = ({ detail }) => {
       const { productId } = detail;
 
       setState(({ productIds, qty }) => {
@@ -184,11 +196,16 @@ const HeaderWlCounter = () => {
           qty: ++qty,
         };
       });
-    });
+    };
+    addEventListener(ADD_TO_WISHLIST_EVENT, handler);
+
+    return () => {
+      removeEventListener(ADD_TO_WISHLIST_EVENT, handler);
+    };
   }, []);
 
   React.useEffect(() => {
-    addEventListener(REMOVE_FROM_WISHLIST_EVENT, ({ detail }) => {
+    const handler = ({ detail }) => {
       setState(({ productIds, qty }) => {
         return {
           productIds: productIds.filter((productId) => {
@@ -197,7 +214,12 @@ const HeaderWlCounter = () => {
           qty: --qty,
         };
       });
-    });
+    };
+    addEventListener(REMOVE_FROM_WISHLIST_EVENT, handler);
+
+    return () => {
+      removeEventListener(REMOVE_FROM_WISHLIST_EVENT, handler);
+    };
   }, []);
 
   const showProducts = () => {
@@ -218,10 +240,23 @@ const HeaderWlCounter = () => {
 };
 
 const HeaderCounters = () => {
+  const [showButtons, setsShowButtons] = React.useState(true);
+  const toggleCounters = () => {
+    setsShowButtons(!showButtons);
+  };
+
   return (
     <>
-      <HeaderCartCounter></HeaderCartCounter>
-      <HeaderWlCounter></HeaderWlCounter>
+      <button title="Toggle" type="button" onClick={toggleCounters}>
+        Toggle
+      </button>
+
+      {showButtons ? (
+        <>
+          <HeaderCartCounter></HeaderCartCounter>
+          <HeaderWlCounter></HeaderWlCounter>
+        </>
+      ) : null}
     </>
   );
 };
