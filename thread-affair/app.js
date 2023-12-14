@@ -102,8 +102,8 @@ const ProductControls = (props) => {
   const { productId } = props;
 
   return [
-    <AddToCartButton productId={productId}></AddToCartButton>,
-    <AddToWishlistButton productId={productId}></AddToWishlistButton>,
+    <AddToCartButton productId={productId} key={0}></AddToCartButton>,
+    <AddToWishlistButton productId={productId} key={1}></AddToWishlistButton>,
   ];
 };
 
